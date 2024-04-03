@@ -1,9 +1,9 @@
 const mongoose = require("../config/database");
 
 const schemaUsuario = new mongoose.Schema({
-    cedula_id: {
+    _id: {
         type: Number,
-        required: [true, 'La cédula es obligatoria']
+        required: [true, 'Ingresar la cédula es obligatorio']
     },
     nombre: {
         type: String,
@@ -23,6 +23,21 @@ const schemaUsuario = new mongoose.Schema({
         required: true,
     },
     direccion: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        validate: {
+            validator: function (value) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            },
+            message: 'Email incorrecto'
+        },
+    },
+    contrasena: {
         type: String,
         required: true,
     },
